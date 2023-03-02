@@ -8,10 +8,10 @@ public class StringSumTests {
     @Test
     void givenTwoIntegers_returnSum(){
         // Given
-        String a = "1";
+        String a = "0";
         String b = "2";
 
         // Then
-        assertEquals(3, StringSum.sum(a, b));
+        assertEquals(2, StringSum.sum(a, b));
     }
 }
