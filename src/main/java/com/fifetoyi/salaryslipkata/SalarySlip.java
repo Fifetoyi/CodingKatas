@@ -34,6 +34,7 @@ public class SalarySlip {
         if(employee.getSalary().doubleValue() <= 8060.0) {
             throw new Exception("Salary must be above 8060 for National Insurance contribution");
         }
-        return salaryRemainder.multiply(BigDecimal.valueOf(0.12)).divide(BigDecimal.valueOf(12.0), 2, RoundingMode.HALF_UP);
+        var annualContribution = salaryRemainder.multiply(BigDecimal.valueOf(0.12));
+        return annualContribution.divide(BigDecimal.valueOf(12.0), 2, RoundingMode.HALF_UP);
     }
 }
