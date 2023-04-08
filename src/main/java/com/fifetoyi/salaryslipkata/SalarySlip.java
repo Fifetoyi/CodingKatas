@@ -1,6 +1,7 @@
 package com.fifetoyi.salaryslipkata;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SalarySlip {
 
@@ -18,7 +19,11 @@ public class SalarySlip {
         return employee.getName();
     }
 
-    private BigDecimal monthlySalary() {
-        return employee.getSalary().divide(BigDecimal.valueOf(12));
+    public BigDecimal monthlySalary() throws Exception {
+        // throw an exception when the value of monthly salary is negative
+        if (employee.getSalary().doubleValue() < 0.0) {
+            throw new Exception("Monthly salary cannot be negative");
+        }
+        return employee.getSalary().divide(BigDecimal.valueOf(12.0), 2, RoundingMode.HALF_UP);
     }
 }
