@@ -5,7 +5,9 @@ import java.math.RoundingMode;
 
 public class SalarySlip {
 
-    private Employee employee;
+    private final Employee employee;
+    private final BigDecimal NATIONAL_INSURANCE_CONTRIBUTION = BigDecimal.valueOf(0.12);
+    private final BigDecimal MONTHS_IN_A_YEAR = BigDecimal.valueOf(12.0);
 
     public SalarySlip(Employee employee) {
         this.employee = employee;
@@ -27,14 +29,13 @@ public class SalarySlip {
         return employee.getSalary().divide(BigDecimal.valueOf(12.0), 2, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal nationalInsurance() throws Exception {
-        // Get the excess salary above 8060 and use 12% of that as the national insurance contribution
-        // Value gotten is per year. Convert to monthly
+    public BigDecimal nationalInsurance() {
         BigDecimal salaryRemainder = employee.getSalary().subtract(BigDecimal.valueOf(8060));
         if(employee.getSalary().doubleValue() <= 8060.0) {
-            throw new Exception("Salary must be above 8060 for National Insurance contribution");
+            return BigDecimal.ZERO;
         }
-        var annualContribution = salaryRemainder.multiply(BigDecimal.valueOf(0.12));
-        return annualContribution.divide(BigDecimal.valueOf(12.0), 2, RoundingMode.HALF_UP);
+        var annualContribution = salaryRemainder.multiply(NATIONAL_INSURANCE_CONTRIBUTION);
+        var monthlyContribution = annualContribution.divide(MONTHS_IN_A_YEAR, 2, RoundingMode.HALF_UP);
+        return monthlyContribution;
     }
 }

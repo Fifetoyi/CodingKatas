@@ -64,7 +64,7 @@ public class SalarySlipKataTests {
     }
 
     @Test
-    public void givenValidEmployeeWithSalaryOf8060_generatesSlip_throwsException() throws Exception {
+    public void givenValidEmployeeWithSalaryAtThreshold_generatesSlip_returnsZeroNationalInsuranceContribution() {
         // Given
         var employee = new Employee(1, "Fifetoyi", new BigDecimal("8060"));
 
@@ -72,11 +72,13 @@ public class SalarySlipKataTests {
         var salarySlip = new SalarySlip(employee);
 
         // Then
-        assertThrows(Exception.class, salarySlip::nationalInsurance);
+        var actual = salarySlip.nationalInsurance();
+        var expected = new BigDecimal(0);
+        assertEquals(expected, actual);
     }
 
     @Test
-    public void givenValidEmployeeWithSalaryBelow8060_generatesSlip_throwsException() throws Exception {
+    public void givenValidEmployeeWithSalaryBelowThreshold_generatesSlip_returnsZeroNationalInsuranceContribution() throws Exception {
         // Given
         var employee = new Employee(1, "Fifetoyi", new BigDecimal("1"));
 
@@ -84,6 +86,8 @@ public class SalarySlipKataTests {
         var salarySlip = new SalarySlip(employee);
 
         // Then
-        assertThrows(Exception.class, salarySlip::nationalInsurance);
+        var actual = salarySlip.nationalInsurance();
+        var expected = new BigDecimal(0);
+        assertEquals(expected, actual);
     }
 }
